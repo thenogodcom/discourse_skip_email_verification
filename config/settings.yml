@@ -1,0 +1,5 @@
+plugins:
+  skip_email_verification_enabled:
+    default: true
+    client: true
+    description: 'Skip email verification step during user registration'
