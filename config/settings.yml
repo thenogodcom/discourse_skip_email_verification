@@ -2,9 +2,3 @@ plugins:
   skip_email_verification_enabled:
     default: true
     client: true
-  custom_powered_by_enabled:
-    default: true
-    client: true
-  custom_powered_by_text:
-    default: "Powered by Your Company"
-    client: true
