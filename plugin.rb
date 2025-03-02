@@ -46,8 +46,12 @@ after_initialize do
   else
     Rails.logger.info("Discourse Skip Email Verification: Email verification skipping is disabled.")
   end
+
+  # Add locale override if enabled
+  if SiteSetting.custom_powered_by_enabled
+    register_locale_override('zh_CN', 'js.powered_by_discourse', SiteSetting.custom_powered_by_text)
+  end
 end
 
 # Add site settings
 register_asset "config/settings.yml"
-register_locale_override('zh_CN', 'js.powered_by_discourse', 'Powered by Your Company')
