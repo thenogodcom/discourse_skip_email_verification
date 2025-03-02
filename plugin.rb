@@ -50,3 +50,4 @@ end
 
 # Add site settings
 register_asset "config/settings.yml"
+register_locale_override('zh_CN', 'js.powered_by_discourse', 'Powered by Your Company')
