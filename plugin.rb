@@ -1,7 +1,7 @@
 # name: discourse_skip_email_verification
 # about: Skip email verification during user registration
 # version: 0.1
-# authors: Your Name
+# authors: By INSIINC
 # url: https://github.com/yourusername/discourse_skip_email_verification
 enabled_site_setting :skip_email_verification_enabled
 
