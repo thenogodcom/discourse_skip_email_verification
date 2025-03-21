@@ -1,4 +1,5 @@
 plugins:
   skip_email_verification_enabled:
+    type: bool
     default: true
-    client: true
+    description: Enable to skip email verification during user registration. Users will be automatically activated.
