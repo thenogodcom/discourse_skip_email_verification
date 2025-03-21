@@ -1,6 +1,6 @@
 # name: discourse-skip-email-verification-v15
 # about: Skip email verification during user registration (Version 0.15 - Targeting InviteRedeemer)
-# version: 0.15
+# version: 0.15 (Corrected Patch)
 # authors: Your Name/Organization
 # url: https://github.com/yourusername/discourse-skip_email_verification
 
@@ -8,12 +8,12 @@ enabled_site_setting :skip_email_verification_enabled
 
 after_initialize do
   if SiteSetting.skip_email_verification_enabled
-    Rails.logger.info("Discourse Skip Email Verification (v0.15): Email verification skipping enabled - Targeting InviteRedeemer.")
+    Rails.logger.info("Discourse Skip Email Verification (v0.15 Corrected): Email verification skipping enabled - Targeting InviteRedeemer Class.")
 
-    # Patch InviteRedeemer to bypass via_email check and force activation for all invites
-    module ::InviteRedeemer
+    # Correctly patch InviteRedeemer CLASS to bypass via_email check and force activation for all invites
+    class ::InviteRedeemer # <--- Reopen the class directly
 
-      prepend(Module.new do
+      prepend(Module.new do # <--- Prepend a module within the class context
         def create_user_from_invite(
           email:,
           invite:,
@@ -25,7 +25,7 @@ after_initialize do
           session:,
           email_token:
         )
-          user = super(
+          user = super( # Call the original method
             email: email,
             invite: invite,
             username: username,
@@ -37,18 +37,17 @@ after_initialize do
             email_token: email_token
           )
 
-          Rails.logger.info("Discourse Skip Email Verification (v0.15 - InviteRedeemer Patch): Force activating user #{user.id} regardless of invite type.")
+          Rails.logger.info("Discourse Skip Email Verification (v0.15 Corrected - InviteRedeemer Patch): Force activating user #{user.id} regardless of invite type.")
           user.activate # Force activate user - bypass via_email check
-          Rails.logger.info("Discourse Skip Email Verification (v0.15 - InviteRedeemer Patch): User #{user.id} force activated.")
+          Rails.logger.info("Discourse Skip Email Verification (v0.15 Corrected - InviteRedeemer Patch): User #{user.id} force activated.")
           user # Return the user
-
         end
       end)
     end
 
 
   else
-    Rails.logger.info("Discourse Skip Email Verification (v0.15): Email verification skipping is disabled.")
+    Rails.logger.info("Discourse Skip Email Verification (v0.15 Corrected): Email verification skipping is disabled.")
   end
 end
 
