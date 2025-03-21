@@ -15,10 +15,18 @@ after_initialize do
       user.save!
 
       # Immediately suspend and then activate the user (admin workaround)
-      user.suspend(reason: "Skipping email verification (plugin)", duration: 0.1.second)
+      # Convert minutes to seconds for duration.  Handle potential nil/invalid values.
+      suspend_duration_minutes = SiteSetting.skip_email_verification_suspend_duration
+      suspend_duration_seconds = if suspend_duration_minutes.is_a?(Numeric) && suspend_duration_minutes >= 0
+                                   suspend_duration_minutes * 60
+                                 else
+                                   60  # Default to 60 seconds (1 minute) if invalid
+                                 end
+      user.suspend(reason: "Skipping email verification (plugin)", duration: suspend_duration_seconds.seconds)
       user.activate
     end
   end
 end
 
+register_asset "stylesheets/common/skip-email-verification.scss"
 register_asset "config/settings.yml"
