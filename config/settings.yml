@@ -3,9 +3,3 @@ plugins:
   skip_email_verification_enabled:
     default: false
     client: true
-  skip_email_verification_suspend_duration:
-    default: 1.0  # Default to 1 minute.  Use a float for consistency.
-    type: float
-    minimum: 0
-    maximum: 3600
-    client: true
