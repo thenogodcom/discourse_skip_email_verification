@@ -1,5 +1,5 @@
 # config/settings.yml
 plugins:
   skip_email_verification_enabled:
-    default: false
+    default: true
     client: true
